@@ -54,7 +54,7 @@
 {{ $tailwindOpts := dict "inlineImports" true }}
 {{ $tailwind := .Site.Params.css.TailwindCSS }}
 
-{{ $styles = $styles | append $tailwindCSS }}
+{{ $styles = $styles | append $tailwind}}
 {{ $styles = $styles | resources.Concat "css/style.css" }}
 
 {{ $stylesLazy = $stylesLazy | resources.Concat "css/style-lazy.css" }}
