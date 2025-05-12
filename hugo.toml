@@ -116,6 +116,9 @@ notAlternative = true
 ############################# Plugins ##############################
 
 # CSS Plugins
+
+[params]
+TailwindCSS = true
 [[params.plugins.css]]
 link = "plugins/swiper/swiper-bundle.css"
 lazy = true
