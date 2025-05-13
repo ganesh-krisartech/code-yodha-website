@@ -1,5 +1,5 @@
 <!-- Language List -->
-{{ if site.IsMultilingual }}
+{{ if gt (len site.Languages) 1 }}
 {{ $class := .Class }}
 {{ $context := .Context }}
 {{ $pageLang := $context.Lang }}
