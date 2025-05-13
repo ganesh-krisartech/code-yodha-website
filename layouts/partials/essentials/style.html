@@ -50,11 +50,8 @@
   {{ end }}
 {{ end }}
 
-{{ $mainCSS := resources.Get "css/main.css" }}
-{{ $tailwindOpts := dict "inlineImports" true }}
-{{ $tailwindCSS := $mainCSS | css.TailwindCSS $tailwindOpts }}
-
-{{ $styles = $styles | append $tailwindCSS }}
+{{ $builtCSS := resources.Get "css/built.css" }}
+{{ $styles = $styles | append $builtCSS }}
 {{ $styles = $styles | resources.Concat "css/style.css" }}
 
 {{ $stylesLazy = $stylesLazy | resources.Concat "css/style-lazy.css" }}
