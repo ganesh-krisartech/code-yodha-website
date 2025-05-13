@@ -31,6 +31,5 @@
   "dependencies": {
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.3"
-  },
-
-//  "build": "hugo --gc --minify --templateMetrics --templateMetricsHints --forceSyncStatic",
+  }
+}
