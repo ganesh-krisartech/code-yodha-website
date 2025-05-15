@@ -3,3 +3,4 @@ themes/
 node_modules/
 resources/
 go.sum
+hugo_stats.json
