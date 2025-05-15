@@ -1,9 +1,15 @@
 ---
-title: "Harshith kondadi"
+title: "CodeYodha"
 meta_title: "About"
 description: "this is meta description"
 image: "/images/avatar.png"
 draft: false
 ---
 
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis illum nesciunt commodi vel nisi ut alias excepturi ipsum, totam, labore tempora, odit ex iste tempore sed. Fugit voluptatibus perspiciatis assumenda nulla ad nihil, omnis vel, doloremque sit quam autem optio maiores, illum eius facilis et quo consectetur provident dolor similique! Enim voluptatem dicta expedita veritatis repellat dolorum impedit, provident quasi at.
+At CodeYodha, we believe every coder is a warrior in the making. Whether you’re taking your first steps or leveling up your skills, our platform is your all-in-one battleground — packed with top-tier tutorials, curated resources, and clear learning roadmaps to guide your journey.
+
+But CodeYodha isn’t just about learning — it’s about rising. We bring you the latest hackathons from across India, giving you the chance to challenge yourself, showcase your skills, and connect with a thriving community of fellow CodeYodhas.
+
+More than just a learning platform, CodeYodha is your launchpad into the tech arena.
+
+Learn with purpose. Code with power. Rise as a Yodha.

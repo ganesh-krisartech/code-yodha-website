@@ -1,0 +1,34 @@
+<section class="bg-white-100 dark:bg-gray-1000 text-gray-900 dark:text-gray-100 py-6 px-4">
+  <div class="container mx-auto">
+    <h2 class="text-xl font-semibold mb-4">🔔 Tech News Updates</h2>
+
+    <div class="overflow-hidden h-40 relative">
+      <ul class="absolute animate-vertical-scroll space-y-6">
+        {{ range where .Site.RegularPages "Section" "blog" }}
+          <li class="text-sm sm:text-base leading-relaxed">
+            <a
+          href="{{ .RelPermalink }}"
+          class="text-blue-600 dark:text-blue-400 hover:underline">
+              {{ .Title }}
+            </a>
+          </li>
+        {{ end }}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes verticalScroll {
+    0% {
+      transform: translateY(100%);
+    }
+    100% {
+      transform: translateY(-100%);
+    }
+  }
+
+  .animate-vertical-scroll {
+    animation: verticalScroll 30s linear infinite;
+  }
+</style>

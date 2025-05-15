@@ -1,26 +1,164 @@
 {{ define "main" }}
-  <section class="section-sm text-center">
-    <div class="container">
-      <div class="row justify-center">
-        <div class="sm:col-10 md:col-8 lg:col-6">
-          <span
-            class="text-[8rem] block font-bold text-text-dark dark:text-darkmode-text-dark">
-            404
-          </span>
-          <h1 class="h2 mb-4">Page not found</h1>
-          <div class="content">
-            <p>
-              The page you are looking for might have been removed, had its name
-              changed, or is temporarily unavailable.
-            </p>
-          </div>
-          <a
-            href="{{ site.BaseURL | relLangURL }}"
-            class="btn btn-primary mt-8">
-            Back to home
-          </a>
-        </div>
-      </div>
+ 
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>CodeYodha Events Calendar</title>
+    <style>
+      .calendar {
+        max-width: 800px;
+        margin: 2rem auto;
+        background: var(--theme-light);
+        padding: 1rem;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      }
+
+      .calendar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .calendar-header h2 {
+        margin: 0;
+        font-size: 1.5rem;
+      }
+
+      .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 10px;
+        margin-top: 1rem;
+      }
+
+      .day-name {
+        font-weight: bold;
+        text-align: center;
+      }
+
+      .day {
+        min-height: 100px;
+        border: 1px solid var(--border-default);
+        border-radius: 8px;
+        padding: 5px;
+        position: relative;
+        background-color: var(--theme-light);
+      }
+
+      .day-number {
+        font-size: 14px;
+        color: var(--text-default);
+      }
+
+      .event {
+        margin-top: 5px;
+        padding: 2px 5px;
+        font-size: 12px;
+        background-color: var(--primary-color);
+        color: rgb(5, 90, 180);
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .event:hover {
+        opacity: 0.8;
+      }
+
+      html[data-mode="dark"] .calendar {
+        background: var(--theme-dark);
+        box-shadow: 0 0 10px rgba(255,255,255,0.1);
+      }
+
+      html[data-mode="dark"] .day {
+        background-color: var(--theme-dark);
+      }
+    </style>
+  </head>
+  <body>
+
+  <div class="calendar">
+    <div class="calendar-header">
+      <h2 id="monthYear"></h2>
     </div>
-  </section>
+    <div class="calendar-grid" id="calendar">
+      <!-- Calendar grid will be generated here -->
+    </div>
+  </div>
+
+  <script>
+    const events = [
+      {
+        date: '2025-05-15',
+        title: 'HackerEarthCTF',
+        url: 'https://ctf.hackerearth.com/'
+      },
+      {
+        date: '2025-05-14',
+        title: 'India AI Expo',
+        url: 'https://example.com/events/india-ai-expo'
+      }
+    ];
+
+    const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const calendar = document.getElementById('calendar');
+    const monthYear = document.getElementById('monthYear');
+
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth();
+
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    monthYear.textContent = `${today.toLocaleString('default', { month: 'long' })} ${year}`;
+
+    // Add day names
+    daysOfWeek.forEach(day => {
+      const div = document.createElement('div');
+      div.classList.add('day-name');
+      div.textContent = day;
+      calendar.appendChild(div);
+    });
+
+    // Add empty slots for first row
+    for (let i = 0; i < firstDay; i++) {
+      const div = document.createElement('div');
+      calendar.appendChild(div);
+    }
+
+    // Add days with events
+    for (let i = 1; i <= daysInMonth; i++) {
+      const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
+      const dayDiv = document.createElement('div');
+      dayDiv.classList.add('day');
+
+      const dayNum = document.createElement('div');
+      dayNum.classList.add('day-number');
+      dayNum.textContent = i;
+      dayDiv.appendChild(dayNum);
+
+      events.forEach(event => {
+        if (event.date === dateStr) {
+          const eventLink = document.createElement('a');
+          eventLink.href = event.url;
+          eventLink.classList.add('event');
+          eventLink.textContent = event.title;
+          eventLink.target = "_blank";
+          dayDiv.appendChild(eventLink);
+        }
+      });
+
+      calendar.appendChild(dayDiv);
+    }
+  </script>
+
+  </body>
+  </html>
+
+
 {{ end }}
