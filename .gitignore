@@ -2,5 +2,6 @@ public/
 themes/
 node_modules/
 resources/
+.idea/
 go.sum
 hugo_stats.json

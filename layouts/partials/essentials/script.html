@@ -1,58 +1,32 @@
-<!-- JS Plugins + Main script -->
-{{ $scripts := slice }}
-{{ $scriptsLazy := slice }}
-{{ range site.Params.plugins.js }}
+<!-- CSS Plugins + Main stylesheet -->
+{{ $styles := slice }}
+{{ range site.Params.plugins.css }}
   {{ if findRE "^http" .link }}
-    <script
-      src="{{ .link | relURL }}"
-      type="application/javascript"
-      {{ .attributes | safeHTMLAttr }}></script>
+    <link
+      href="{{ .link | relURL }}"
+      rel="stylesheet"
+      {{ .attributes | safeHTMLAttr }} />
   {{ else }}
-    {{ if not .lazy }}
-      {{ $scripts = $scripts | append (resources.Get .link) }}
-    {{ else }}
-      {{ $scriptsLazy = $scriptsLazy | append (resources.Get .link) }}
+    {{ $resource := resources.Get .link }}
+    {{ if $resource }}
+      {{ $styles = $styles | append $resource }}
     {{ end }}
   {{ end }}
 {{ end }}
 
-
-<!-- main script -->
-{{ $scripts = $scripts | append (resources.Get "js/main.js") }}
-{{ $scripts = $scripts | resources.Concat "js/script.js" }}
-
-{{ $scriptsLazy = $scriptsLazy | resources.Concat "js/script-lazy.js" }}
-
-{{ if hugo.IsProduction }}
-  {{ $scripts = $scripts | minify | fingerprint }}
-  {{ $scriptsLazy = $scriptsLazy | minify | fingerprint }}
+{{ $mainStyle := resources.Get "css/style.css" }}
+{{ if $mainStyle }}
+  {{ $styles = $styles | append $mainStyle }}
 {{ end }}
 
-{{/* scripts */}}
-<script
-  crossorigin="anonymous"
-  integrity="{{ $scripts.Data.Integrity }}"
-  src="{{ $scripts.RelPermalink }}"></script>
-
-{{/* scripts lazy */}}
-<script
-  defer
-  async
-  crossorigin="anonymous"
-  integrity="{{ $scriptsLazy.Data.Integrity }}"
-  src="{{ $scriptsLazy.RelPermalink }}"></script>
-
-<!-- progressive web app -->
-{{ partialCached "pwa.html" . }}
-
-
-<!-- cookie consent -->
-{{ partialCached "cookie-consent.html" . }}
-
-
-<!-- google adsense -->
-{{ partialCached "adsense-script.html" . }}
-
-
-<!-- cookie consent -->
-{{ partialCached "announcement-script.html" . }}
+{{ if gt (len $styles) 0 }}
+  {{ $styles = $styles | resources.Concat "css/style.min.css" }}
+  {{ if hugo.IsProduction }}
+    {{ $styles = $styles | minify | fingerprint }}
+  {{ end }}
+  <link
+    href="{{ $styles.RelPermalink }}"
+    rel="stylesheet"
+    integrity="{{ $styles.Data.Integrity }}"
+    crossorigin="anonymous" />
+{{ end }}

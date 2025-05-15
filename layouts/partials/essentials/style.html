@@ -15,8 +15,8 @@
 <link rel="dns-prefetch" href="//platform.twitter.com" />
 
 <!-- google fonts -->
-{{ $pf := site.Data.theme.fonts.font_family.primary }}
-{{ $sf := site.Data.theme.fonts.font_family.secondary }}
+{{ $pf:= site.Data.theme.fonts.font_family.primary }}
+{{ $sf:= site.Data.theme.fonts.font_family.secondary }}
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <script>
@@ -34,54 +34,49 @@
 {{ $stylesLazy := slice }}
 
 {{ range site.Params.plugins.css }}
-{{ if findRE "^http" .link }}
-<link
-        crossorigin="anonymous"
-        media="all"
-        rel="stylesheet"
-        href="{{ .link | relURL }}"
-        {{ .attributes | safeHTMLAttr }} />
-{{ else }}
-{{ if not .lazy }}
-{{ $resource := resources.Get .link }}
-{{ if $resource }}
-{{ $styles = $styles | append $resource }}
-{{ end }}
-{{ else }}
-{{ $resource := resources.Get .link }}
-{{ if $resource }}
-{{ $stylesLazy = $stylesLazy | append $resource }}
-{{ end }}
-{{ end }}
-{{ end }}
+  {{ if findRE "^http" .link }}
+    <link
+      crossorigin="anonymous"
+      media="all"
+      rel="stylesheet"
+      href="{{ .link | relURL }}"
+      {{ .attributes | safeHTMLAttr }} />
+  {{ else }}
+    {{ if not .lazy }}
+      {{ $styles = $styles | append (resources.Get .link) }}
+    {{ else }}
+      {{ $stylesLazy = $stylesLazy | append (resources.Get .link) }}
+    {{ end }}
+  {{ end }}
 {{ end }}
 
-{{ $builtCSS := resources.Get "css/built.css" }}
-{{ if $builtCSS }}
-{{ $styles = $styles | append $builtCSS }}
+{{ $mainCSS := resources.Get "css/main.css" }}
+{{ $tailwindOpts := dict "inlineImports" true }}
+{{ $tailwindCSS := $mainCSS | css.TailwindCSS $tailwindOpts }}
+
+{{ $styles = $styles | append $tailwindCSS }}
 {{ $styles = $styles | resources.Concat "css/style.css" }}
+
+{{ $stylesLazy = $stylesLazy | resources.Concat "css/style-lazy.css" }}
+
 {{ if hugo.IsProduction }}
-{{ $styles = $styles | minify | fingerprint }}
-{{ end }}
-<!-- link main style -->
-<link href="{{ $styles.RelPermalink }}" rel="stylesheet" {{ with $styles.Data.Integrity }}integrity="{{ . }}"{{ end }} />
-{{ else }}
-<!-- Fallback: try loading built.css directly if Concat fails -->
-<link rel="stylesheet" href="{{ "css/built.css" | relURL }}" />
+  {{ $styles = $styles | minify | fingerprint }}
+  {{ $stylesLazy = $stylesLazy | minify | fingerprint }}
 {{ end }}
 
-{{ if gt (len $stylesLazy) 0 }}
-{{ $stylesLazy = $stylesLazy | resources.Concat "css/style-lazy.css" }}
-{{ if hugo.IsProduction }}
-{{ $stylesLazy = $stylesLazy | minify | fingerprint }}
-{{ end }}
+
+<!-- link main style -->
+<link
+  href="{{ $styles.RelPermalink }}"
+  integrity="{{ $styles.Data.Integrity }}"
+  rel="stylesheet" />
+
 <!-- link lazy style -->
 <link
-        defer
-        async
-        rel="stylesheet"
-        href="{{ $stylesLazy.RelPermalink }}"
-        integrity="{{ $stylesLazy.Data.Integrity }}"
-        media="print"
-        onload="this.media='all'; this.onload=null;" />
-{{ end }}
+  defer
+  async
+  rel="stylesheet"
+  href="{{ $stylesLazy.RelPermalink }}"
+  integrity="{{ $stylesLazy.Data.Integrity }}"
+  media="print"
+  onload="this.media='all'; this.onload=null;" />
