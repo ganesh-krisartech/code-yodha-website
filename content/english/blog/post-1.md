@@ -3,7 +3,7 @@ title: "Apple unveils M4 chip for next-gen MacBooks"
 meta_title: ""
 description: "this is meta description"
 date: 2022-04-04T05:00:00Z
-image: "/images/image-placeholder.png"
+image: "/images/apple.png"
 categories: ["Microprocessor", "Apple"]
 author: "CodeYodha"
 tags: ["Microprocessor", "Apple"]

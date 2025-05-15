@@ -45,6 +45,11 @@ parent = "Pages"
 name = "YodhaCalender"
 url = "/404"
 
+[[main]]
+parent = "Pages"
+name = "Cheatsheets"
+url = "/Cheatsheets"
+
 
 # footer menu
 [[footer]]
