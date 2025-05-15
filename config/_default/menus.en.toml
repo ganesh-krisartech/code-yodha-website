@@ -12,8 +12,8 @@ url = "/about"
 weight = 2
 
 [[main]]
-name = "Elements"
-url = "/elements"
+name = "Articles"
+url = "/articles"
 weight = 3
 
 [[main]]
@@ -42,7 +42,7 @@ url = "/categories"
 
 [[main]]
 parent = "Pages"
-name = "404 Page"
+name = "YodhaCalender"
 url = "/404"
 
 
@@ -53,8 +53,8 @@ url = "/about"
 weight = 1
 
 [[footer]]
-name = "Elements"
-url = "/elements"
+name = "Articles"
+url = "/articles"
 weight = 2
 
 [[footer]]

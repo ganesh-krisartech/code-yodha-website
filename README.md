@@ -1,1 +1,2 @@
-# code-yodha-website
+# CodeYodhaWebsite
+Website repo for codeYodha
