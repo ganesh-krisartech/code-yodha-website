@@ -6,6 +6,7 @@
   "author": "zeon.studio",
   "scripts": {
     "dev": "hugo server",
+    "build": "hugo --gc --minify --templateMetrics --templateMetricsHints --forceSyncStatic",
     "preview": "hugo server --disableFastRender --navigateToChanged --templateMetrics --templateMetricsHints --watch --forceSyncStatic -e production --minify",
     "dev:example": "cd exampleSite && hugo server",
     "build:example": "cd exampleSite && hugo --gc --minify --templateMetrics --templateMetricsHints --forceSyncStatic",
@@ -15,9 +16,7 @@
     "project-setup": "node ./scripts/projectSetup.js",
     "theme-setup": "node ./scripts/themeSetup.js",
     "update-theme": "node ./scripts/themeUpdate.js",
-    "format": "prettier -w .",
-    "build": "hugo --gc --minify",
-    "build:css": "npx tailwindcss -i ./assets/css/main.css -o ./assets/css/built.css --minify"
+    "format": "prettier -w ."
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.6",
