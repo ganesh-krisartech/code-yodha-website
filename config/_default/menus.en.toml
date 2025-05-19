@@ -35,10 +35,7 @@ parent = "Events"
 name = "List of Hackathons"
 url = "/events"
 
-[[main]]
-parent = "Pages"
-name = "Authors"
-url = "/authors"
+
 
 [[main]]
 parent = "Pages"
