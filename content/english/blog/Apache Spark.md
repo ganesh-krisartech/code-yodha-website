@@ -1,8 +1,8 @@
 +++
 title = "Introduction to Spark"
 description = "Learn how to install and get started with Spark (Scala)"
-date = "2024-06-21"
-updated = "2024-06-21"
+date = "2024-05-20"
+updated = "2024-05-20"
 draft = false
 weight = 100 
 sort_by = "weight"
@@ -77,7 +77,7 @@ In this article, we are going to understand:
 
 
 ## What are the integrations of Apache Spark?
-Apache Spark can be integrated with a lot of tools and technologies in various domains. Some of the key tools are:
+Apache Spark can be integrated with numerous tools and technologies in various domains,including but not limited to:
 - Pandas
 - Power BI
 - Tableau
