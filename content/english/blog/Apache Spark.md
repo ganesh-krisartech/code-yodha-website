@@ -1,8 +1,8 @@
 +++
 title = "Introduction to Spark"
 description = "Learn how to install and get started with Spark (Scala)"
-date = "2024-05-20"
-updated = "2024-05-20"
+date = "2025-05-20"
+updated = "2025-05-20"
 draft = false
 weight = 100 
 sort_by = "weight"
