@@ -12,46 +12,19 @@ url = "/about"
 weight = 2
 
 [[main]]
-name = "Articles"
-url = "/articles"
+name = "ByteBuzz"
+url = "/blog"
 weight = 3
 
 [[main]]
-weight = 4
-name = "Pages"
-
-[[main]]
-parent = "Pages"
-name = "Blog"
-url = "/blog"
-
-[[main]]
-parent = "Pages"
-name = "Contact"
-url = "/contact"
-
-[[main]]
-parent = "Events"
-name = "List of Hackathons"
-url = "/events"
-
-
-
-[[main]]
-parent = "Pages"
-name = "Categories"
-url = "/categories"
-
-[[main]]
-parent = "Pages"
-name = "YodhaCalender"
+name = "YodhaCalendar"
 url = "/404" 
- 
+weight = 5
 
 [[main]]
-parent = "Pages"
 name = "Cheatsheets"
 url = "/Cheatsheets"
+weight = 4
 
 
 # footer menu
@@ -59,11 +32,6 @@ url = "/Cheatsheets"
 name = "About"
 url = "/about"
 weight = 1
-
-[[footer]]
-name = "Articles"
-url = "/articles"
-weight = 2
 
 [[footer]]
 name = "Privacy Policy"
