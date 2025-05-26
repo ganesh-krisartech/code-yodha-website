@@ -1,14 +1,15 @@
 {
   "main": [
     {
-      "name": "facebook",
-      "icon": "fab fa-facebook",
-      "link": "https://www.facebook.com/"
+      "name": "Instagram",
+      "icon": "fab fa-instagram",
+      "link": "https://www.instagram.com/codeyodha/"
     },
     {
-      "name": "twitter",
-      "icon": "fab fa-twitter",
-      "link": "https://twitter.com/"
+      "name": "Discord",
+      "icon": "fab fa-discord",
+      "link": "https://discord.gg/4BF2ZdMD"
+    
     },
     {
       "name": "github",
