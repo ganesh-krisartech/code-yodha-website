@@ -1,5 +1,5 @@
 ---
-title: "Sql"
+title: "SQL" 
 meta_title: ""
 description: "**SQL cheatsheet**"
 author: "CodeYodha"
