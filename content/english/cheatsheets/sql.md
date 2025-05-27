@@ -151,4 +151,4 @@ Conditional logic
 
 
 ---
-[⬇️ Download the Git Cheatsheet PDF](/downloads/sql_cheatsheet.pdf)
+[⬇️ Download the SQL Cheatsheet PDF](/downloads/sql_cheatsheet.pdf)

@@ -11,7 +11,7 @@ draft: false
 
 # **🔧 ULTIMATE SHELL COMMAND CHEATSHEET**
 
-## **🌍 NAVIGATION & FILE MANAGEMENT**
+### **🌍 NAVIGATION & FILE MANAGEMENT**
 
 **Change directory** – `cd path/to/directory`
 
@@ -54,7 +54,7 @@ draft: false
 
 ---
 
-## **🔍 SEARCHING & VIEWING FILES**
+### **🔍 SEARCHING & VIEWING FILES**
 
 **Find a file by name** – `find /path -name filename`
 
@@ -79,7 +79,7 @@ draft: false
 
 ---
 
-## **⚙️ PROCESS MANAGEMENT**
+### **⚙️ PROCESS MANAGEMENT**
 
 **Show current running processes** – `ps`
 
@@ -109,7 +109,7 @@ draft: false
 
 ---
 
-## **📡 NETWORKING**
+### **📡 NETWORKING**
 
 **Show IP addresses** – `ip a`
 
@@ -133,7 +133,7 @@ draft: false
 
 ---
 
-## **📝 TEXT PROCESSING**
+### **📝 TEXT PROCESSING**
 
 **Display contents of a file** – `cat filename`
 
@@ -158,7 +158,7 @@ draft: false
 
 ---
 
-## **🔐 USER & PERMISSIONS MANAGEMENT**
+### **🔐 USER & PERMISSIONS MANAGEMENT**
 
 **Add a new user** – `adduser username`
 
@@ -181,7 +181,7 @@ draft: false
 
 ---
 
-## **⚡ SHORTCUTS & MISCELLANEOUS**
+### **⚡ SHORTCUTS & MISCELLANEOUS**
 
 **Terminate current running process** – `Ctrl + C`
 
@@ -212,7 +212,7 @@ draft: false
 
 ---
 
-## **🛠️ SYSTEM ADMINISTRATION**
+### **🛠️ SYSTEM ADMINISTRATION**
 
 **Install a package (Debian/Ubuntu)** – `apt-get install package`
 
@@ -234,3 +234,4 @@ draft: false
 
 ---
 
+[⬇️ Download the SQL Cheatsheet PDF](/downloads/sql_cheatsheet.pdf)
