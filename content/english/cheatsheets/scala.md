@@ -95,4 +95,6 @@ scalaVersion := "2.13.12"
 
 ---
 
-[⬇️ Download the SQL Cheatsheet PDF](/downloads/sql_cheatsheet.pdf)
+[⬇️ Download the Scala Cheatsheet PDF](/downloads/scala.pdf)
+
+<!-- store the pdfs in static>downloads> -->

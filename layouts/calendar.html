@@ -2,32 +2,27 @@
 
 <style>
   .calendar {
-    max-width: 800px;
-    margin: 2rem auto;
     background: var(--theme-light);
     padding: 1rem;
-    border-radius: 50px;
+    border-radius: 30px;
     box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
   }
 
   .calendar-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-  .calendar-header button {
-    background-color: var(--primary-color, #b34545);
-    color: white;
-    border: none;
-    padding: 0px 10px;
-    border-radius: 50px;
-    cursor: pointer;
-    font-size: 2rem;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
   }
 
-  .calendar-header button:hover {
-    opacity: 0.7;
-    transition: opacity 0.7s;
+  .calendar-header button {
+    font-size: 1.2rem;
+    padding: 6px 12px;
+    flex-shrink: 0;
   }
 
   .calendar-header h2 {
@@ -37,7 +32,7 @@
 
   .calendar-grid {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(7, minmax(0, 1fr));
     gap: 10px;
     margin-top: 1rem;
   }
@@ -54,6 +49,7 @@
     padding: 5px;
     position: relative;
     background-color: var(--theme-light);
+    overflow: hidden;
   }
 
   .day-number {
@@ -66,11 +62,20 @@
     padding: 2px 5px;
     font-size: 12px;
     background-color: var(--primary-color);
-    color: rgb(5, 90, 180);
+    color: white;
     border-radius: 5px;
     cursor: pointer;
     text-decoration: none;
     display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .event-dot {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    display: block;
   }
 
   .event:hover {
@@ -85,16 +90,32 @@
   html[data-mode="dark"] .day {
     background-color: var(--theme-dark);
   }
+
+  @media (max-width: 767px) {
+    .event {
+      display: none;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .event-dot {
+      display: none;
+    }
+  }
 </style>
 
-<div class="calendar">
-  <div class="calendar-header">
-    <button id="prevMonth">&#8592;</button>
-    <h2 id="monthYear"></h2>
-    <button id="nextMonth">&#8594;</button>
-  </div>
-  <div class="calendar-grid" id="calendar">
-    <!-- Calendar grid will be generated here -->
+<div class="container my-4">
+  <div class="row justify-content-center">
+    <div class="col-12 calendar">
+      <div class="calendar-header d-flex justify-content-between align-items-center mb-3">
+        <button id="prevMonth">&#8592;</button>
+        <h2 id="monthYear" class="text-center flex-grow-1"></h2>
+        <button id="nextMonth">&#8594;</button>
+      </div>
+      <div class="calendar-grid" id="calendar">
+        <!-- Calendar grid will be generated here -->
+      </div>
+    </div>
   </div>
 </div>
 
@@ -105,20 +126,16 @@
       title: 'HackerEarthCTF',
       url: 'https://ctf.hackerearth.com/'
     },
-    
-   
     {
-      date: '2025-05-29',
+      date: '2025-05-31',
       title: 'Figma Config Hyderabad',
       url: '/events/figma-config'
     },
-    
     {
       date: '2025-06-14',
       title: 'Hackprix 2025',
       url: '/events/hackprix'
     }
-    
   ];
 
   const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -149,7 +166,7 @@
       calendar.appendChild(div);
     });
 
-    // Empty slots
+    // Empty slots before day 1
     for (let i = 0; i < firstDay; i++) {
       const div = document.createElement('div');
       calendar.appendChild(div);
@@ -166,8 +183,12 @@
       dayNum.textContent = i;
       dayDiv.appendChild(dayNum);
 
+      let eventCount = 0;
       events.forEach(event => {
         if (event.date === dateStr) {
+          eventCount++;
+
+          // Full label for desktop
           const eventLink = document.createElement('a');
           eventLink.href = event.url;
           eventLink.classList.add('event');
@@ -176,6 +197,14 @@
           dayDiv.appendChild(eventLink);
         }
       });
+
+      // Dot for mobile
+      if (eventCount > 0) {
+        const dot = document.createElement('div');
+        dot.classList.add('event-dot');
+        dot.textContent = '•';
+        dayDiv.appendChild(dot);
+      }
 
       calendar.appendChild(dayDiv);
     }
