@@ -12,15 +12,15 @@ Join a vibrant community of developers, designers, and problem-solvers as you ta
 Whether you're a beginner eager to learn or a seasoned hacker aiming for the podium, HackPrix is your launchpad to experiment, collaborate, and ship your ideas into reality.
 
 What to Expect:
-💡 Live Problem Statements from partner companies
+ -  Live Problem Statements from partner companies
 
-🤝 Team Collaboration & Mentorship
+ -  Team Collaboration & Mentorship
 
-🔐 Cybersecurity, AI, Blockchain & more!
+ -  Cybersecurity, AI, Blockchain & more!
 
-💬 Tech Talks, AMA Sessions, and Demos
+ -  Tech Talks, AMA Sessions, and Demos
 
-🏆 Cash Prizes, Swag, and Internship Offers
+ - Cash Prizes, Swag, and Internship Offers
 
 > Stay tuned as we reveal the themes, partners, and registration details for HackPrix 2025.
 Mark your calendars — this is the hackathon you don’t want to miss!

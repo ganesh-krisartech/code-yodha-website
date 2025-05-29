@@ -1,0 +1,224 @@
+{{ define "main" }}
+
+<style>
+  .calendar {
+    max-width: 800px;
+    margin: 2rem auto;
+    background: var(--theme-light);
+    padding: 1rem;
+    border-radius: 50px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+  }
+
+  .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .calendar-header button {
+    background-color: var(--primary-color, #b34545);
+    color: white;
+    border: none;
+    padding: 0px 10px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 2rem;
+  }
+
+  .calendar-header button:hover {
+    opacity: 0.7;
+    transition: opacity 0.7s;
+  }
+
+  .calendar-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    margin-top: 1rem;
+  }
+
+  .day-name {
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .day {
+    min-height: 100px;
+    border: 1px solid var(--border-default);
+    border-radius: 8px;
+    padding: 5px;
+    position: relative;
+    background-color: var(--theme-light);
+  }
+
+  .day-number {
+    font-size: 14px;
+    color: var(--text-default);
+  }
+
+  .event {
+    margin-top: 5px;
+    padding: 2px 5px;
+    font-size: 12px;
+    background-color: var(--primary-color);
+    color: rgb(5, 90, 180);
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .event:hover {
+    opacity: 0.8;
+  }
+
+  html[data-mode="dark"] .calendar {
+    background: var(--theme-dark);
+    box-shadow: 0 0 10px rgba(255,255,255,0.1);
+  }
+
+  html[data-mode="dark"] .day {
+    background-color: var(--theme-dark);
+  }
+</style>
+
+<div class="calendar">
+  <div class="calendar-header">
+    <button id="prevMonth">&#8592;</button>
+    <h2 id="monthYear"></h2>
+    <button id="nextMonth">&#8594;</button>
+  </div>
+  <div class="calendar-grid" id="calendar">
+    <!-- Calendar grid will be generated here -->
+  </div>
+</div>
+
+<script>
+  const events = [
+    {
+      date: '2025-05-15',
+      title: 'HackerEarthCTF',
+      url: 'https://ctf.hackerearth.com/'
+    },
+    {
+      date: '2025-05-14',
+      title: 'India AI Expo',
+      url: 'https://example.com/events/india-ai-expo'
+    },
+    {
+      date: '2025-06-01',
+      title: 'Global AI Bootcamp 2025 – Online Edition',
+      url: 'https://globalai.community/chapters/hyderabad/events/global-ai-bootcamp-2025-hyderabad/'
+    },
+    {
+      date: '2025-05-29',
+      title: 'Figma Config Hyderabad',
+      url: '/events/figma-config'
+    },
+    {
+      date: '2025-04-12',
+      title: 'DevCon Hyderabad',
+      url: 'https://example.com/events/devcon'
+    },
+    {
+      date: '2025-03-22',
+      title: 'T-Hub Sprint Hackathon',
+      url: 'https://thub.events/sprint2025'
+    },
+    {
+      date: '2025-06-14',
+      title: 'Hackprix 2025',
+      url: '/events/hackprix'
+    },
+    {
+      date: '2025-02-28',
+      title: 'AI for Everyone Workshop',
+      url: 'https://aiforeveryone.com/workshop'
+    },
+    {
+      date: '2025-06-05',
+      title: 'Women in Tech Hack',
+      url: 'https://wit-hackathon.com'
+    }
+  ];
+
+  const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const calendar = document.getElementById('calendar');
+  const monthYear = document.getElementById('monthYear');
+
+  const prevMonthBtn = document.getElementById('prevMonth');
+  const nextMonthBtn = document.getElementById('nextMonth');
+
+  let currentDate = new Date();
+
+  function renderCalendar(date) {
+    calendar.innerHTML = '';
+
+    const year = date.getFullYear();
+    const month = date.getMonth();
+
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    monthYear.textContent = `${date.toLocaleString('default', { month: 'long' })} ${year}`;
+
+    // Day names
+    daysOfWeek.forEach(day => {
+      const div = document.createElement('div');
+      div.classList.add('day-name');
+      div.textContent = day;
+      calendar.appendChild(div);
+    });
+
+    // Empty slots
+    for (let i = 0; i < firstDay; i++) {
+      const div = document.createElement('div');
+      calendar.appendChild(div);
+    }
+
+    // Days + Events
+    for (let i = 1; i <= daysInMonth; i++) {
+      const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
+      const dayDiv = document.createElement('div');
+      dayDiv.classList.add('day');
+
+      const dayNum = document.createElement('div');
+      dayNum.classList.add('day-number');
+      dayNum.textContent = i;
+      dayDiv.appendChild(dayNum);
+
+      events.forEach(event => {
+        if (event.date === dateStr) {
+          const eventLink = document.createElement('a');
+          eventLink.href = event.url;
+          eventLink.classList.add('event');
+          eventLink.textContent = event.title;
+          eventLink.target = "_blank";
+          dayDiv.appendChild(eventLink);
+        }
+      });
+
+      calendar.appendChild(dayDiv);
+    }
+  }
+
+  prevMonthBtn.addEventListener('click', () => {
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    renderCalendar(currentDate);
+  });
+
+  nextMonthBtn.addEventListener('click', () => {
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    renderCalendar(currentDate);
+  });
+
+  // Initial render
+  renderCalendar(currentDate);
+</script>
+
+{{ end }}
