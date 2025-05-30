@@ -26,6 +26,17 @@
 <p class="navbar-text pull-right  text-center h5 bg-dark text-white">
   <strong>🎊Happy Birthday Harshith!🎊</strong>
 </p>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+<script>
+  // Fire once the page has loaded
+  window.addEventListener('load', () => {
+    confetti({
+      particleCount: 150,
+      spread: 70,
+      origin: { y: 0.6 }
+    });
+  });
+</script>
 <!-- custom script -->
 {{ partialCached "custom-script.html" . }}
 
