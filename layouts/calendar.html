@@ -2,13 +2,13 @@
 
 <style>
   .calendar {
+    max-width: 800px;
+    margin: 2rem auto;
     background: var(--theme-light);
     padding: 1rem;
-    border-radius: 30px;
+    border-radius: 50px;
     box-shadow: 0 3px 15px rgba(0,0,0,0.1);
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
+    overflow: hidden;
   }
 
   .calendar-header {
@@ -16,23 +16,35 @@
     justify-content: space-between;
     align-items: center;
     flex-wrap: nowrap;
-    gap: 0.5rem;
+    gap: 1rem;
   }
 
   .calendar-header button {
-    font-size: 1.2rem;
-    padding: 6px 12px;
+    background-color: var(--primary-color, #b34545);
+    color: white;
+    border: none;
+    padding: 0px 12px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 2rem;
     flex-shrink: 0;
+  }
+
+  .calendar-header button:hover {
+    opacity: 0.7;
+    transition: opacity 0.7s;
   }
 
   .calendar-header h2 {
     margin: 0;
     font-size: 1.5rem;
+    text-align: center;
+    flex-grow: 1;
   }
 
   .calendar-grid {
     display: grid;
-    grid-template-columns: repeat(7, minmax(0, 1fr));
+    grid-template-columns: repeat(7, 1fr);
     gap: 10px;
     margin-top: 1rem;
   }
@@ -40,6 +52,7 @@
   .day-name {
     font-weight: bold;
     text-align: center;
+    font-size: 0.85rem;
   }
 
   .day {
@@ -49,7 +62,9 @@
     padding: 5px;
     position: relative;
     background-color: var(--theme-light);
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
   }
 
   .day-number {
@@ -62,20 +77,12 @@
     padding: 2px 5px;
     font-size: 12px;
     background-color: var(--primary-color);
-    color: white;
+    color: rgb(5, 90, 180);
     border-radius: 5px;
     cursor: pointer;
     text-decoration: none;
     display: inline-block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .event-dot {
-    font-size: 1.5rem;
-    color: var(--primary-color);
-    display: block;
+    word-break: break-word;
   }
 
   .event:hover {
@@ -91,31 +98,68 @@
     background-color: var(--theme-dark);
   }
 
-  @media (max-width: 767px) {
-    .event {
-      display: none;
-    }
+  /* Fade animation */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
-  @media (min-width: 768px) {
-    .event-dot {
-      display: none;
+  .calendar-grid.fade {
+    animation: fadeIn 0.3s ease;
+  }
+
+  /* ✅ Responsive Fix */
+  @media (max-width: 600px) {
+    .calendar {
+      padding: 0.75rem;
+      border-radius: 20px;
+    }
+
+    .calendar-header {
+      gap: 0.5rem;
+    }
+
+    .calendar-header h2 {
+      font-size: 1.25rem;
+    }
+
+    .calendar-header button {
+      font-size: 1.5rem;
+      padding: 2px 8px;
+    }
+
+    .calendar-grid {
+      gap: 5px;
+    }
+
+    .day {
+      min-height: 80px;
+      padding: 4px;
+    }
+
+    .day-name {
+      font-size: 0.75rem;
+    }
+
+    .day-number {
+      font-size: 0.75rem;
+    }
+
+    .event {
+      font-size: 10px;
+      padding: 2px 4px;
     }
   }
 </style>
 
-<div class="container my-4">
-  <div class="row justify-content-center">
-    <div class="col-12 calendar">
-      <div class="calendar-header d-flex justify-content-between align-items-center mb-3">
-        <button id="prevMonth">&#8592;</button>
-        <h2 id="monthYear" class="text-center flex-grow-1"></h2>
-        <button id="nextMonth">&#8594;</button>
-      </div>
-      <div class="calendar-grid" id="calendar">
-        <!-- Calendar grid will be generated here -->
-      </div>
-    </div>
+<div class="calendar">
+  <div class="calendar-header">
+    <button id="prevMonth">&#8592;</button>
+    <h2 id="monthYear"></h2>
+    <button id="nextMonth">&#8594;</button>
+  </div>
+  <div class="calendar-grid" id="calendar">
+    <!-- Calendar grid will be generated here -->
   </div>
 </div>
 
@@ -127,7 +171,7 @@
       url: 'https://ctf.hackerearth.com/'
     },
     {
-      date: '2025-05-31',
+      date: '2025-05-29',
       title: 'Figma Config Hyderabad',
       url: '/events/figma-config'
     },
@@ -141,24 +185,26 @@
   const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const calendar = document.getElementById('calendar');
   const monthYear = document.getElementById('monthYear');
-
   const prevMonthBtn = document.getElementById('prevMonth');
   const nextMonthBtn = document.getElementById('nextMonth');
 
   let currentDate = new Date();
 
   function renderCalendar(date) {
+    // Trigger fade animation
+    calendar.classList.remove('fade');
+    void calendar.offsetWidth; // Force reflow
+    calendar.classList.add('fade');
+
     calendar.innerHTML = '';
 
     const year = date.getFullYear();
     const month = date.getMonth();
-
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
     monthYear.textContent = `${date.toLocaleString('default', { month: 'long' })} ${year}`;
 
-    // Day names
     daysOfWeek.forEach(day => {
       const div = document.createElement('div');
       div.classList.add('day-name');
@@ -166,13 +212,11 @@
       calendar.appendChild(div);
     });
 
-    // Empty slots before day 1
     for (let i = 0; i < firstDay; i++) {
       const div = document.createElement('div');
       calendar.appendChild(div);
     }
 
-    // Days + Events
     for (let i = 1; i <= daysInMonth; i++) {
       const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
       const dayDiv = document.createElement('div');
@@ -183,12 +227,8 @@
       dayNum.textContent = i;
       dayDiv.appendChild(dayNum);
 
-      let eventCount = 0;
       events.forEach(event => {
         if (event.date === dateStr) {
-          eventCount++;
-
-          // Full label for desktop
           const eventLink = document.createElement('a');
           eventLink.href = event.url;
           eventLink.classList.add('event');
@@ -197,14 +237,6 @@
           dayDiv.appendChild(eventLink);
         }
       });
-
-      // Dot for mobile
-      if (eventCount > 0) {
-        const dot = document.createElement('div');
-        dot.classList.add('event-dot');
-        dot.textContent = '•';
-        dayDiv.appendChild(dot);
-      }
 
       calendar.appendChild(dayDiv);
     }
@@ -220,7 +252,6 @@
     renderCalendar(currentDate);
   });
 
-  // Initial render
   renderCalendar(currentDate);
 </script>
 

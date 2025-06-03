@@ -2,7 +2,7 @@
 title: "Figma Config"
 meta_title: ""
 description: "this is meta description"
-draft: true
+draft: false
 ---
 
 

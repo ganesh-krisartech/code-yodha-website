@@ -17,6 +17,7 @@
   </head>
 
   <body>
+
     <!-- cache partial only in production -->
     {{ if hugo.IsProduction }}
       {{ partialCached "preloader.html" . }}
@@ -49,5 +50,7 @@
 
     <!-- script (always cache it) -->
     {{ partialCached "essentials/script.html" . }}
+        
+
   </body>
 </html>
